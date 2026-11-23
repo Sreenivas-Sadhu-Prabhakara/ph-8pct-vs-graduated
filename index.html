@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; form-action 'self'">
+<title>8% flat vs graduated tax calculator for Philippine freelancers · Open MSME</title>
+<meta name="description" content="Enter your expected gross and expenses to see your Philippine income tax both ways — the 8% flat option vs graduated rates — the break-even, and the ₱3M VAT-threshold trap.">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="8% flat vs graduated tax calculator for Philippine freelancers">
+<meta property="og:description" content="Compare the 8% flat option against graduated income tax plus the 3% percentage tax, find which is cheaper, and see the ₱3M VAT-threshold trap.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/accent.css">
+<script src="assets/theme-init.js"></script>
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a class="brand" href="./"><span class="dot"></span><b>Open MSME</b><span class="tag">8% vs graduated</span></a>
+  <span class="sp"></span>
+  <a class="home" href="https://sreenivas-sadhu-prabhakara.github.io/openmsme/">All tools</a>
+  <button class="themer" data-themer type="button">Theme</button>
+</div></header>
+
+<main>
+  <section class="hero"><div class="wrap">
+    <div class="eyebrow">Tax &amp; compliance · Philippines</div>
+    <h1>8% flat vs graduated tax calculator for Philippine freelancers</h1>
+    <p class="lede">Enter your expected gross and expenses to see your income tax both ways — the 8% flat option vs graduated rates — the break-even, and the ₱3M VAT-threshold trap.</p>
+    <div class="who">
+      <span class="pill">PH self-employed, freelancers, professionals</span>
+      <span class="pill reg">BIR · TRAIN law</span>
+    </div>
+  </div></section>
+
+  <div class="wrap"><div class="cols calc">
+
+    <section class="card">
+      <h2>Inputs</h2>
+
+      <div class="field">
+        <label for="gross">Annual gross sales / receipts</label>
+        <div class="inp has-pre"><span class="pre">₱</span>
+          <input type="number" id="gross" inputmode="decimal" min="0" step="1000" value="1200000">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Deduction method</label>
+        <div class="seg" id="method" role="group" aria-label="Deduction method">
+          <button type="button" data-method="itemized" aria-pressed="true">Itemized expenses</button>
+          <button type="button" data-method="osd" aria-pressed="false">40% OSD</button>
+        </div>
+      </div>
+
+      <div class="field" id="itemizedField">
+        <label for="expenses">Annual deductible expenses</label>
+        <div class="inp has-pre"><span class="pre">₱</span>
+          <input type="number" id="expenses" inputmode="decimal" min="0" step="1000" value="300000">
+        </div>
+      </div>
+
+      <div class="field" id="osdField" hidden>
+        <label for="osdExpenses">40% OSD deduction <span class="hint">(auto · 40% of gross)</span></label>
+        <div class="inp has-pre"><span class="pre">₱</span>
+          <input type="text" id="osdExpenses" readonly value="—" aria-readonly="true">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="withheld">Tax already withheld <span class="hint">(optional · for net payable)</span></label>
+        <div class="inp has-pre"><span class="pre">₱</span>
+          <input type="number" id="withheld" inputmode="decimal" min="0" step="1000" value="0">
+        </div>
+      </div>
+    </section>
+
+    <section class="card sticky">
+      <h2>Result</h2>
+      <div class="result-primary">
+        <div class="k" id="recLabel">Recommended option</div>
+        <div class="v" id="recValue">₱0</div>
+        <div class="sub" id="recSub">Enter your figures to compare both options.</div>
+      </div>
+
+      <table class="breakdown">
+        <thead>
+          <tr>
+            <th>Line item</th>
+            <th class="num">8% flat <span class="pill reg" id="badge8" hidden></span></th>
+            <th class="num">Graduated <span class="pill reg" id="badgeG" hidden></span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Base (gross − ₱250,000)</td><td class="num" id="r_base8">—</td><td class="num">—</td></tr>
+          <tr><td>8% flat tax</td><td class="num" id="r_tax8">—</td><td class="num">—</td></tr>
+          <tr class="sub"><td>Taxable net income</td><td class="num">—</td><td class="num" id="r_net">—</td></tr>
+          <tr><td>Income tax (graduated)</td><td class="num">—</td><td class="num" id="r_inctax">—</td></tr>
+          <tr><td>Percentage tax (3% · Sec. 116)</td><td class="num">—</td><td class="num" id="r_pct">—</td></tr>
+          <tr class="total"><td>Total tax</td><td class="num" id="r_tot8">—</td><td class="num" id="r_totg">—</td></tr>
+          <tr id="payRow" hidden><td>Net still payable</td><td class="num" id="r_pay8">—</td><td class="num" id="r_payg">—</td></tr>
+        </tbody>
+      </table>
+
+      <div class="btnrow">
+        <button class="btn ghost" id="print" type="button">Print / Save PDF</button>
+        <button class="btn ghost" id="reset" type="button">Reset</button>
+      </div>
+    </section>
+
+  </div></div>
+
+  <div class="wrap"><section class="prose">
+    <h2>How it works</h2>
+    <p>Two ways to be taxed on the same income. The <strong>8% flat option</strong> charges 8% on your gross sales above the ₱250,000 exemption and <em>replaces both</em> your income tax and the 3% percentage tax — but you must elect it, stay non-VAT registered, and keep gross at or below ₱3,000,000. The <strong>graduated option</strong> taxes your net income (gross minus expenses) on the TRAIN brackets and <em>adds</em> the 3% percentage tax on gross. For expenses you may use your real <strong>itemized</strong> figures or the <strong>40% OSD</strong> — a flat optional standard deduction equal to 40% of gross, no receipts required.</p>
+    <p>The 8% option tends to win when your expenses are low relative to sales; graduated tends to win once expenses are high enough that your taxed net shrinks. This tool computes both totals so you can see the break-even for your own numbers. Above ₱3,000,000 the 8% option disappears and VAT (12%) replaces the 3% percentage tax.</p>
+
+    <details class="assumptions">
+      <summary>Assumptions &amp; rates</summary>
+      <p>Graduated income-tax brackets on annual taxable net income (TRAIN law, RA 10963, rates effective from 2023):</p>
+      <table class="breakdown">
+        <thead><tr><th>Annual taxable net income</th><th>Income tax</th></tr></thead>
+        <tbody>
+          <tr><td>Up to ₱250,000</td><td>0</td></tr>
+          <tr><td>Over ₱250,000 to ₱400,000</td><td>15% of the excess over ₱250,000</td></tr>
+          <tr><td>Over ₱400,000 to ₱800,000</td><td>₱22,500 + 20% of the excess over ₱400,000</td></tr>
+          <tr><td>Over ₱800,000 to ₱2,000,000</td><td>₱102,500 + 25% of the excess over ₱800,000</td></tr>
+          <tr><td>Over ₱2,000,000 to ₱8,000,000</td><td>₱402,500 + 30% of the excess over ₱2,000,000</td></tr>
+          <tr><td>Over ₱8,000,000</td><td>₱2,202,500 + 35% of the excess over ₱8,000,000</td></tr>
+        </tbody>
+      </table>
+      <ul>
+        <li><strong>₱250,000</strong> — annual exemption; the first ₱250k is untaxed under both options.</li>
+        <li><strong>8% flat rate</strong> — applied to gross receipts above ₱250,000; replaces income tax and the 3% percentage tax.</li>
+        <li><strong>3% percentage tax</strong> — Section 116, on gross, for non-VAT taxpayers with gross ≤ ₱3,000,000.</li>
+        <li><strong>₱3,000,000</strong> — VAT threshold; above it, VAT at 12% applies instead of the 3% percentage tax and the 8% option is unavailable.</li>
+        <li><strong>40% OSD</strong> — optional standard deduction equal to 40% of gross, used in place of itemized expenses.</li>
+      </ul>
+    </details>
+
+    <div class="note"><strong>Educational estimate, not tax advice.</strong> Based on TRAIN-law (RA 10963) rates. The 8% option must be elected, requires non-VAT registration and gross ≤ ₱3,000,000. Figures ignore other credits and the quarterly schedule — confirm with a CPA or the BIR.</div>
+  </section></div>
+</main>
+
+<footer class="foot"><div class="wrap">
+  <span>Open MSME · open-source tool for MSMEs in India &amp; the Philippines · MIT</span>
+  <span><a href="https://sreenivas-sadhu-prabhakara.github.io/openmsme/">All tools</a></span>
+</div></footer>
+
+<script src="assets/ui.js"></script>
+<script src="assets/calc.js"></script>
+</body>
+</html>
