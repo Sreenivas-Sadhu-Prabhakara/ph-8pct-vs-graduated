@@ -109,3 +109,31 @@ input:focus, select:focus { outline:2px solid var(--tool); outline-offset:1px; b
 
 @media (prefers-reduced-motion: reduce){ * { transition:none !important; } }
 @media print { .topbar,.themer,.btnrow,.foot,.hero .who { display:none; } body { background:#fff; } section.card { border:none; padding:0; } }
+
+/* ---- docs/explainer pages (for binary tools that aren't web apps) ---- */
+pre { background:var(--surface-2); border:1px solid var(--line); border-radius:8px; padding:14px 16px; overflow-x:auto; font-family:var(--mono); font-size:.85rem; line-height:1.5; color:var(--ink); }
+pre code { background:none; padding:0; font-size:inherit; }
+.featgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:14px; margin:18px 0; }
+.feat { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:16px; border-top:3px solid var(--tool); }
+.feat h3 { margin:0 0 6px; font-size:.98rem; }
+.feat p { margin:0; font-size:.88rem; color:var(--ink-2); }
+.steps { counter-reset:s; list-style:none; padding:0; }
+.steps li { counter-increment:s; position:relative; padding-left:34px; margin:12px 0; color:var(--ink-2); }
+.steps li::before { content:counter(s); position:absolute; left:0; top:1px; width:23px; height:23px; border-radius:6px; background:var(--tool); color:#fff; font-size:.78rem; font-weight:700; display:flex; align-items:center; justify-content:center; font-family:var(--mono); }
+
+/* Grid/flex children default to min-width:auto, so a long unbroken string (a clone
+   URL in a <pre>) sizes the track to its min-content and forces page-wide horizontal
+   scroll. Let children shrink and keep the scrolling inside the pre where it belongs. */
+.cols > *, .featgrid > *, .ideas > * { min-width: 0; }
+pre { max-width: 100%; }
+
+/* Small coloured text needs a lighter accent in dark mode: the sector hues are
+   mid-tone and fall below AA contrast on a dark surface. Backgrounds/borders keep
+   the true accent; only small text uses the lightened derivative. */
+:root { --tool-text: var(--tool); }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --tool-text: color-mix(in srgb, var(--tool) 50%, white); } }
+:root[data-theme="dark"]{ --tool-text: color-mix(in srgb, var(--tool) 50%, white); }
+.hero .eyebrow { color: var(--tool-text); }
+.pill.reg { color: var(--tool-text); }
+.result-primary .v { color: var(--tool-text); }
+.wave-card .repo, .brand .tag { color: var(--tool-text); }
